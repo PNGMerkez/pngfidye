@@ -36,7 +36,7 @@ except:
             import daemon
         except:
             sys.exit("Başarısız ! Lütfen bu paketin kurulu olduğuna emin ol !\n\t -> python-daemon")
-
+# @pngmerkez
 key = Fernet.generate_key() # iyisinden bir key oluşturduk
 fer = Fernet(key)
 
